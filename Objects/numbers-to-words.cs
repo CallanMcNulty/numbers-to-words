@@ -54,16 +54,31 @@ namespace NumberToWord
 
     public string numberToString(float number)
     {
+      if(number == 0)
+      {
+        return "zero";
+      }
       string numberString = number.ToString();
+      string finalWord = "";
+      if(numberString[0]=='-')
+      {
+        numberString = numberString.Substring(1,numberString.Length-1);
+        finalWord = finalWord + "negative ";
+      }
       int decimalIndex = numberString.IndexOf(".");
       if(decimalIndex==-1)
       {
-        return manyDigitsToString(numberString);
+        return finalWord + manyDigitsToString(numberString);
       }
       else
       {
-        string finalWord = "";
-        finalWord = finalWord + manyDigitsToString(numberString.Substring(0,decimalIndex)) +" and "+ manyDigitsToString(numberString.Substring(decimalIndex+1,numberString.Length-decimalIndex-1));
+        string prefix = finalWord + manyDigitsToString(numberString.Substring(0,decimalIndex));
+        string spacer = " and ";
+        if(prefix=="")
+        {
+          spacer = "";
+        }
+        finalWord = prefix +spacer+ manyDigitsToString(numberString.Substring(decimalIndex+1,numberString.Length-decimalIndex-1));
         string fraction = "1";
         for(int i=0; i<numberString.Length-decimalIndex-1; i++)
         {
@@ -91,11 +106,18 @@ namespace NumberToWord
         int startIndex = Math.Max(0,numberString.Length-i-3);
         int substringLength = Math.Min(3,numberString.Length-i);
         string spacer = "";
-        if(finalWord != "")
+
+        string place =  _placeNames[i/3];
+        string prefix = threeDigitsToString(numberString.Substring(startIndex,substringLength));
+        if(prefix == "")
+        {
+          place = "";
+        }
+        if(finalWord != "" && place != "")
         {
           spacer = " ";
         }
-        finalWord = threeDigitsToString(numberString.Substring(startIndex,substringLength)) + _placeNames[i/3] +spacer+ finalWord;
+        finalWord = prefix + place +spacer+ finalWord;
       }
       return finalWord;
     }

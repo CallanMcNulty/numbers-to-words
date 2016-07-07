@@ -60,5 +60,20 @@ namespace NumberToWord
       Converter convert = new Converter();
       Assert.Equal("four and three hundredths", convert.numberToString(4.03F));
     }
+    [Fact]
+    public void Convert_minus4point03_minusfourandthreehundredths() {
+      Converter convert = new Converter();
+      Assert.Equal("negative four and three hundredths", convert.numberToString(-4.03F));
+    }
+    [Fact]
+    public void Convert_4point00003_fourandthreemillionths() {
+      Converter convert = new Converter();
+      Assert.Equal("four and three hundred thousandths", convert.numberToString(4.00003F));
+    }
+    [Fact]
+    public void Convert_0_zero() {
+      Converter convert = new Converter();
+      Assert.Equal("zero", convert.numberToString(0));
+    }
   }
 }

@@ -1,0 +1,12 @@
+<form action="/result" method="post">
+  <label>Enter a number to convert: </label>
+  <input type="number" name="number" value="" step="any" oninput="checkNumberFieldLength(this);">
+  <button type="submit" name="button">Submit</button>
+</form>
+<script type="text/javascript">
+  function checkNumberFieldLength(elem){
+    if (elem.value.length > 4) {
+        elem.value = elem.value.slice(0,7);
+    }
+  }
+</script>
